@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { IMAGES } from "../constant/constant";
 
 const Navigation = () => {
+	const [searchTitle, setSearchTitle] = useState("");
+
+	const handelSearch = (e) => {
+		setSearchTitle(e.target.value);
+	};
+	console.log("search title", searchTitle);
 	return (
 		<nav className="py-4 2xl:px-6">
 			<div className="container flex items-center justify-between">
@@ -37,6 +43,8 @@ const Navigation = () => {
 							placeholder="Filter books..."
 							className="search"
 							id="lws-searchBook"
+							value={searchTitle}
+							onChange={handelSearch}
 						/>
 					</div>
 				</form>
