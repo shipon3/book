@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import addFetchBook from "../redux/books/thunk/addFetchBook";
+import updateFetchBook from "../redux/books/thunk/updateFetchBook";
 
 const BookAddFrom = () => {
+	const editBook = useSelector((state) => state.books.editBook);
 	const dispatch = useDispatch();
+	const [bookId, setBookId] = useState();
 	const [bookName, setBookName] = useState("");
 	const [bookAuthorName, setBookAuthorName] = useState("");
 	const [bookImage, setBookImage] = useState("");
@@ -30,12 +33,52 @@ const BookAddFrom = () => {
 		setBookRating(0);
 		setIsFeatured(false);
 	};
-
+	useEffect(() => {
+		setBookId(editBook.id);
+		setBookName(editBook.name);
+		setBookAuthorName(editBook.author);
+		setBookImage(editBook.thumbnail);
+		setBookPrice(editBook.price);
+		setBookRating(editBook.rating);
+		setIsFeatured(editBook.featured);
+	}, [editBook]);
+	const updateHandelSubmit = (e) => {
+		e.preventDefault();
+		dispatch(
+			updateFetchBook(
+				bookId,
+				bookName,
+				bookAuthorName,
+				bookImage,
+				bookPrice,
+				bookRating,
+				isFeatured
+			)
+		);
+		setBookId(null);
+		setBookName("");
+		setBookAuthorName("");
+		setBookImage("");
+		setBookPrice(0);
+		setBookRating(0);
+		setIsFeatured(false);
+	};
 	return (
 		<div>
 			<div className="p-4 overflow-hidden bg-white shadow-cardShadow rounded-md">
-				<h4 className="mb-8 text-xl font-bold text-center">Add New Book</h4>
-				<form className="book-form" onSubmit={handelSubmit}>
+				<h4 className="mb-8 text-xl font-bold text-center">
+					{JSON.stringify(editBook) === "{}"
+						? "Add New Book"
+						: "Update This Book"}
+				</h4>
+				<form
+					className="book-form"
+					onSubmit={
+						JSON.stringify(editBook) === "{}"
+							? handelSubmit
+							: updateHandelSubmit
+					}
+				>
 					<div className="space-y-2">
 						<label for="name">Book Name</label>
 						<input
@@ -121,7 +164,7 @@ const BookAddFrom = () => {
 					</div>
 
 					<button type="submit" className="submit" id="submit">
-						Add Book
+						{JSON.stringify(editBook) === "{}" ? "Add Book" : "Update Book"}
 					</button>
 				</form>
 			</div>

@@ -10,7 +10,7 @@ const filterReducer = (state = initialState, action) => {
 			};
 		case BOOKSEARCH:
 			return {
-				...state.title,
+				...state,
 				title: action.payload,
 			};
 

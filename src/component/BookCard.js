@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { editBook } from "../redux/books/actions";
 import deleteFetchBook from "../redux/books/thunk/deleteFetchBook";
 import BookRatings from "./BookRatings";
 
@@ -23,7 +24,10 @@ const BookCard = ({ book }) => {
 						<span className="badge-success lws-Badge">Featured</span>
 					)}
 					<div className="text-gray-500 space-x-2">
-						<button className="lws-edit">
+						<button
+							className="lws-edit"
+							onClick={() => dispatch(editBook(book))}
+						>
 							<svg
 								fill="none"
 								viewBox="0 0 24 24"

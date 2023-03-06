@@ -26,32 +26,32 @@ export const addBook = (name, author, thumbnail, price, rating, featured) => {
 	};
 };
 
-export const editBook = (bookId) => {
+export const editBook = (book) => {
 	return {
 		type: EDITBOOK,
-		payload: bookId,
+		payload: book,
 	};
 };
 
-export const update = (
-	bookId,
-	bookName,
-	bookAuthor,
-	bookImage,
-	bookPrice,
-	bookRating,
-	isFeatured
+export const updateBook = (
+	id,
+	name,
+	author,
+	thumbnail,
+	price,
+	rating,
+	featured
 ) => {
 	return {
 		type: UPDATEBOOK,
 		payload: {
-			bookId,
-			bookName,
-			bookAuthor,
-			bookImage,
-			bookPrice,
-			bookRating,
-			isFeatured,
+			id,
+			name,
+			author,
+			thumbnail,
+			price,
+			rating,
+			featured,
 		},
 	};
 };

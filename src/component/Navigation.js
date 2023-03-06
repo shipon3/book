@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { IMAGES } from "../constant/constant";
-
+import { bookSearch } from "../redux/filter/actions";
 const Navigation = () => {
+	const dispatch = useDispatch();
 	const [searchTitle, setSearchTitle] = useState("");
 
 	const handelSearch = (e) => {
 		setSearchTitle(e.target.value);
+		dispatch(bookSearch(e.target.value));
 	};
 	console.log("search title", searchTitle);
 	return (

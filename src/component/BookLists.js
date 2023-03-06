@@ -4,7 +4,8 @@ import { fetchBooks } from "../redux/books/thunk/fetchBooks";
 import BookCard from "./BookCard";
 
 const BookLists = () => {
-	const books = useSelector((state) => state.books);
+	const bookState = useSelector((state) => state.books);
+	const { books } = bookState;
 	const filters = useSelector((state) => state.filters);
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -15,20 +16,25 @@ const BookLists = () => {
 		const { status } = filters;
 		switch (status) {
 			case "All":
-				return book.featured | !book.featured;
+				return book;
 			case "featured":
 				return book.featured;
 
 			default:
-				return book.featured | !book.featured;
+				return book;
 		}
 	};
+	const filterByTitle = (book) =>
+		book.name.toLowerCase().includes(filters.title);
 
 	return (
 		<div className="lws-bookContainer">
-			{books.filter(filterByStatus).map((book, index) => {
-				return <BookCard book={book} key={index} />;
-			})}
+			{books
+				.filter(filterByTitle)
+				.filter(filterByStatus)
+				.map((book, index) => {
+					return <BookCard book={book} key={index} />;
+				})}
 		</div>
 	);
 };
